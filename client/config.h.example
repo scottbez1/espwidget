@@ -1,0 +1,4 @@
+// Create a copy of this file named "config.h" and update these values in it
+#define WIFI_SSID "your wifi ssid here"
+#define WIFI_PASS "your wifi password here"
+#define ENDPOINT "http://<your server hostname/ip address here>:3000/renderwidget?rgb565=1"
