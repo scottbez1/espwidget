@@ -1,0 +1,6 @@
+// Rename this file to config.js and update the values below as necessary
+
+exports.aqi_config = {
+    // UPDATE ME: this URL grabs air sensor readings from San Francisco. Update/replace it to cover the desired area
+    url: 'https://www.purpleair.com/data.json?fetch=true&nwlat=37.8108895872717&selat=37.71483463534956&nwlng=-122.51883840567045&selng=-122.37369240678527'
+}
