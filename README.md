@@ -1,8 +1,10 @@
 Work in progress ESP8266 and ST7789 (240x240 IPS LCD) mini info display framework.
 
-<img src="https://pbs.twimg.com/media/DsbQYDfUcAAAItL.jpg"/>
+<img src="https://pbs.twimg.com/media/DsbQYDfUcAAAItL.jpg:small"/>
 
-The idea is to make cheap wifi-connected info displays to put on your desk or around the house as always-on dashboards. The ST7789-based LCD is crisp and bright and [can be found for less than $4 online](https://www.aliexpress.com/wholesale?catId=0&SearchText=st7789).
+The idea is to make cheap wifi-connected info displays to put on your desk or around the house as always-on dashboards. The ST7789-based LCD is crisp and bright and [can be found for less than $4 online](https://www.aliexpress.com/wholesale?catId=0&SearchText=st7789), and the ESP8266 module I'm using (a Wemos D1 Mini) [can be found for just over $2](https://www.aliexpress.com/wholesale?catId=0&SearchText=wemos%20d1%20mini).
+
+<img src="https://pbs.twimg.com/media/DskVuSEUwAAtUuY.jpg:small"/>
 
 Since the ESP8266 doesn't have enough RAM for a full framebuffer (240 * 240 * 2 bytes per pixel) and the Arduino graphics libraries are lacking important features like anti-aliasing, the rendering is done server-side using [node-canvas](https://github.com/Automattic/node-canvas) and streamed over HTTP as a raw RGB565 bitmap directly to the LCD driver.
 
