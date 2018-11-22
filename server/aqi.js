@@ -1,9 +1,9 @@
 const { roundRect, wrapText } = require('./canvas_util');
 const { registerFont } = require('canvas');
-const rp = require('request-promise-native');
+const { get_json } = require('./api_util')
 
 try {
-    var { aqi_config } = require('./config.js');
+    var { config } = require('./config.js');
 } catch (e) {
     if (e.code !== 'MODULE_NOT_FOUND') {
         throw e;
@@ -134,50 +134,44 @@ const getMedianAQI = function(d) {
 }
 
 exports.drawAqiWidget = async function(ctx) {
-    var aqi;
-    const options = {
-        method: 'GET',
-        uri: aqi_config.url,
-        json: true
-    };
     try {
         console.log("Requesting purpleair");
-        const response = await rp(options);
-        aqi = getMedianAQI(response);
+        const response = await get_json(config.aqi_url);
+
+        const aqi = getMedianAQI(response);
         console.log("Got aqi", aqi);
-    } catch (error) {
-        console.error(error);
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 240, 240);
+        
+        ctx.beginPath();
+        const grd=ctx.createLinearGradient(0,0,0,200);
+        grd.addColorStop(0,aqi.gradient[0]);
+        grd.addColorStop(1,aqi.gradient[1]);
+        ctx.fillStyle=grd;
+        roundRect(ctx, 10, 10, 220, 200, 8);
+        ctx.fill();
+        
+
+
+        ctx.textAlign="center"; 
+        ctx.fillStyle = aqi.color;
+
+        ctx.font = '36px Roboto Light';
+        ctx.fillText('Current AQI', 120, 50);
+
+        ctx.font = '84px Roboto Light';
+        ctx.fillText(aqi.value, 120, 140);
+
+        ctx.font = '24px Roboto Light';
+        wrapText(ctx, aqi.label, 120, 180, 200, 24);
+
+        ctx.textAlign="left"; 
+        ctx.font = '14px Roboto Medium Italic';
+        ctx.fillStyle = "#888";
+        ctx.fillText(new Date().toLocaleString(), 10, 230);
+    } catch (e) {
+        console.error(e);
         res.status(500).send("uh oh");
     }
-
-
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, 240, 240);
-     
-    ctx.beginPath();
-    const grd=ctx.createLinearGradient(0,0,0,200);
-    grd.addColorStop(0,aqi.gradient[0]);
-    grd.addColorStop(1,aqi.gradient[1]);
-    ctx.fillStyle=grd;
-    roundRect(ctx, 10, 10, 220, 200, 8);
-    ctx.fill();
-     
-
-
-    ctx.textAlign="center"; 
-    ctx.fillStyle = aqi.color;
-
-    ctx.font = '36px Roboto Light';
-    ctx.fillText('Current AQI', 120, 50);
-
-    ctx.font = '84px Roboto Light';
-    ctx.fillText(aqi.value, 120, 140);
-
-    ctx.font = '24px Roboto Light';
-    wrapText(ctx, aqi.label, 120, 180, 200, 24);
-
-    ctx.textAlign="left"; 
-    ctx.font = '14px Roboto Medium Italic';
-    ctx.fillStyle = "#888";
-    ctx.fillText(new Date().toLocaleString(), 10, 230);
 }

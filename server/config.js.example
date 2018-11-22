@@ -1,6 +1,9 @@
 // Rename this file to config.js and update the values below as necessary
 
-exports.aqi_config = {
+exports.config = {
     // UPDATE ME: this URL grabs air sensor readings from San Francisco. Update/replace it to cover the desired area
-    url: 'https://www.purpleair.com/data.json?fetch=true&nwlat=37.8108895872717&selat=37.71483463534956&nwlng=-122.51883840567045&selng=-122.37369240678527'
+    aqi_url: 'https://www.purpleair.com/data.json?fetch=true&nwlat=37.8108895872717&selat=37.71483463534956&nwlng=-122.51883840567045&selng=-122.37369240678527',
+
+    // UPDATE ME: this URL grabs weather forecast data for San Francisco. Update with the desired zip code and your own OpenWeatherMap API key
+    weather_url: 'https://api.openweathermap.org/data/2.5/forecast?zip=94107,us&appid=<YOUR API KEY HERE>'
 }
