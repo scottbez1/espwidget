@@ -45,8 +45,18 @@ node index.js
 ```
 
 ## Client setup
+|Wemos D1 Mini|LCD|
+|---|---|
+|GND|GND|
+|3V3|VCC|
+|D5|SCL|
+|D7|SDA|
+|D4|RES|
+|D3|DC|
+|-|BLK|
+
+
 - (TODO: TFT_eSPI library setup)
-- (TODO: document pin connections)
 - Copy config.h.example to config.h
 - Edit config.h to contain your Wifi credentials and the hostname of the server
 - Install!
